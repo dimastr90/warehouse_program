@@ -1,0 +1,49 @@
+/*Add-Form*/
+
+.addItemForm{
+    background-color: bisque;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
+
+}
+
+.addFormContainer{
+    display: grid;
+}
+
+.addItemHeader{
+    padding-top: 0.4em;
+    text-align: center;
+    display: grid;
+}
+
+.addItemCat{
+    display: grid;
+    padding: 0.5em;
+}
+
+.addItemName{
+    display: grid;
+    padding: 0.5em;
+}
+
+.addItemPrice{
+    display: grid;
+    padding: 0.5em;
+}
+
+.addItemButton{
+    display: grid;
+    padding-top: 0.5em;
+    padding-bottom: 1.5em;
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+
+
+@media screen and (max-width: 800px) {
+    .addItemForm{
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,29 @@
+.addBase{
+    padding: 1em;
+    text-align: center;
+}
+
+.addBaseButton{
+    margin-top: 0.5em;
+}
+
+.basesNames{
+    text-align: center;
+}
+
+.baseButton {
+    width: 8em;
+    margin-right: 0.5em;
+}
+
+.editBaseNameButton{
+    border:0;
+}
+
+.listBases{
+    list-style: none;
+}
+
+.listBases li{
+    margin-top: 0.5em;
+}

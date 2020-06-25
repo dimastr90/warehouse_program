@@ -1,0 +1,15 @@
+.navbar{
+    left:0px;
+    background: #dddddd;
+    width:16em;
+    height:100%;
+    position:absolute;
+    overflow-x: auto;
+    border-right: solid;
+    border-color: rgba(198, 196, 60, 0.53);
+}
+
+.mainContainer{
+    margin-left:18em;
+    margin-right: 1em;
+}

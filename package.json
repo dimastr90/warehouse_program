@@ -1,0 +1,31 @@
+{
+  "name": "warehouse-program",
+  "version": "1.0.0",
+  "description": "Warehouse managing program",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app.js",
+    "server": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "mern",
+    "react"
+  ],
+  "author": "Dima Stronov <dimastr90@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.5.0",
+    "mongoose": "^5.9.18"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.4"
+  }
+}

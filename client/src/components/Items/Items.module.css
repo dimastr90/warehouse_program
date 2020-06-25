@@ -1,0 +1,11 @@
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+    .addItemForm{
+        grid-template-columns: 1fr;
+    }
+}
