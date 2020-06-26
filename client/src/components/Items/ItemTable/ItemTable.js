@@ -12,10 +12,10 @@ const ItemTable = (props) => {
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <th>Uniq_ID</th>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Price</th>
+                        {props.tableHeadItems.map(i=>{
+                            return <th><button className={classes.tableHeadButton} value={i.value} onClick={props.sortButtonsHandler}>{i.name}
+                            <i className="fa fa-sort" aria-hidden="true"></i></button></th>
+                        })}
                         <th>Edit</th>
                     </tr>
                     </thead>

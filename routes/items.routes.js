@@ -21,7 +21,8 @@ router.put(
                     message: "Incorrect category data"
                 })
             }
-            const {category, name, price} = req.body;
+            const {category, name} = req.body;
+            const price = Number(req.body.price);
 
             const check = await Categories.find({$and: [{_id: category}, {items: {$elemMatch: {name: name}}}]});
             if (check.length > 0) {
@@ -161,7 +162,8 @@ router.put(
                     message: "Incorrect input data"
                 })
             }
-            const {id, category, name, price, oldCat} = req.body;
+            const {id, category, name, oldCat} = req.body;
+            const price = Number(req.body.price);
 
             const check = await Categories.find({$and: [{_id: category}, {items: {$elemMatch: {uniq_Id: id}}}]});
 

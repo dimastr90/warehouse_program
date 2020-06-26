@@ -49,11 +49,10 @@ const BaseMain = (props) => {
             <table className="table table-striped">
                 <thead>
                 <tr>
-                    <th>Uniq_ID</th>
-                    <th>Category</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Qty</th>
+                    {props.tableHeadItems.map(i=>{
+                        return <th><button className={classes.basesTableHeadButtons} value={i.value} onClick={props.sortButtonsHandler}>
+                            {i.name}<i className="fa fa-sort" aria-hidden="true"/></button></th>
+                    })}
                     <th>Edit</th>
                 </tr>
                 </thead>

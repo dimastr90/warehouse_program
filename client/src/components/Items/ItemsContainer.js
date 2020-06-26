@@ -6,9 +6,10 @@ import {
     getListCategories, renameItemInBase,
     setAddItemCurrentCat,
     setAddItemName,
-    setAddItemPrice
+    setAddItemPrice, setAllItems, setCurrentSortOrder
 } from "../../redux/items-reducer";
 import {useToasts} from "react-toast-notifications";
+import SortingItems from "../../modules/SortingItems";
 
 
 const ItemsContainer = (props) => {
@@ -78,7 +79,14 @@ const ItemsContainer = (props) => {
                     showToast('Error', 'error');
                 }
             })
-    }
+    };
+
+    const sortButtonsHandler = (e) => {
+        const val = e.target.value;
+        const sortOrder = props.currentSortOrder;
+        props.setAllItems(SortingItems.sort(props.allItems, val, sortOrder));
+        props.setCurrentSortOrder(sortOrder==='asc' ? 'desc' : 'asc');
+    };
 
 
     const onNameChangeHandler = (e) => {
@@ -100,7 +108,8 @@ const ItemsContainer = (props) => {
                    renameItemHandler={renameItemHandler}
                    onNameChangeHandler={onNameChangeHandler}
                    onPriceChangeHandler={onPriceChangeHandler}
-                   onCategorySelectHandler={onCategorySelectHandler}/>
+                   onCategorySelectHandler={onCategorySelectHandler}
+                   sortButtonsHandler={sortButtonsHandler}/>
         </>
     )
 }
@@ -111,7 +120,9 @@ const mapStateToProps = (state) => ({
     addItemCurrentCat: state.items.addItemCurrentCat,
     addItemName: state.items.addItemName,
     addItemPrice: state.items.addItemPrice,
-    allItems: state.items.allItems
+    allItems: state.items.allItems,
+    tableHeadItems: state.items.tableHeadItems,
+    currentSortOrder: state.items.currentSortOrder
 })
 
 
@@ -124,5 +135,6 @@ export default connect(mapStateToProps, {
     getAllItems,
     deleteItemFromBase,
     editCatInBase,
-    renameItemInBase
+    setAllItems,
+    setCurrentSortOrder
 })(ItemsContainer);

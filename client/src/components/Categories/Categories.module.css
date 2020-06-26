@@ -19,3 +19,19 @@
     font-weight: bold;
     color: #218838;
 }
+
+
+
+@media screen and (max-width: 800px) {
+    .addCatForm{
+        width: 17em;
+        padding: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .listCat {
+        width: 15em;
+        margin: 0 auto 0 auto;
+    }
+}
