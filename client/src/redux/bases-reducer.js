@@ -13,6 +13,7 @@ const SET_CURRENT_ITEM_FOR_ADD = 'SET_CURRENT_ITEM_FOR_ADD';
 const SET_CURRENT_QTY_FOR_ADD = 'SET_CURRENT_QTY_FOR_ADD';
 const SET_CURRENT_ITEM_LIST_FOR_ADD = 'SET_CURRENT_ITEM_LIST_FOR_ADD';
 const SET_CURRENT_SELECTED_BASE_DATA = 'SET_CURRENT_SELECTED_BASE_DATA';
+const SET_CURRENT_SORT_ORDER = 'SET_CURRENT_SORT_ORDER';
 
 
 const initialState = {
@@ -24,7 +25,9 @@ const initialState = {
     currentCatForAdd:'',
     currentItemForAdd:'',
     currentQtyForAdd:'',
-    currentSelectedBaseData:[]
+    currentSelectedBaseData:[],
+    tableHeadItems:[{name:'Uniq_Id',value:"uniq_Id"}, {name:'Category', value:'category'}, {name:'Name',value:'name'},{name:'Price',value:'price'},{name:'Quantity', value:'qty'}],
+    currentSortOrder:'asc'
 };
 
 
@@ -76,7 +79,12 @@ const basesReducer = (state=initialState, action) => {
             return{
                 ...state,
                 currentSelectedBaseData: [...action.data]
-            }
+            };
+        case SET_CURRENT_SORT_ORDER:
+            return {
+                ...state,
+                currentSortOrder: action.newOrder
+            };
         default:
             return state;
     }
@@ -100,6 +108,8 @@ export const setCurrentItemListForAdd = (itemList) =>({type: SET_CURRENT_ITEM_LI
 export const setCurrentQtyForAdd = (qty) =>({type: SET_CURRENT_QTY_FOR_ADD, qty});
 
 export const setCurrentSelectedBaseData= (data) => ({type: SET_CURRENT_SELECTED_BASE_DATA, data});
+
+export const setCurrentSortOrder = (newOrder) => ({type:SET_CURRENT_SORT_ORDER, newOrder});
 
 
 export const createBaseInDb = (name) => async (dispatch) => {

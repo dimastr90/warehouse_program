@@ -1,19 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Items from "./Items";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
-    addCatToBase, deleteItemFromBase, editCatInBase, getAllItems,
-    getListCategories, renameItemInBase,
+    addCatToBase,
+    deleteItemFromBase,
+    editCatInBase,
+    getAllItems,
+    getListCategories,
+    renameItemInBase,
     setAddItemCurrentCat,
     setAddItemName,
-    setAddItemPrice
+    setAddItemPrice,
+    setAllItems,
+    setCurrentSortOrder,
 } from "../../redux/items-reducer";
-import {useToasts} from "react-toast-notifications";
-
+import { useToasts } from "react-toast-notifications";
+import SortingItems from "../../modules/SortingItems";
 
 const ItemsContainer = (props) => {
     // eslint-disable-next-line
-    const [listCats,setListCats] = useState(props.currentRootCategories);
+    const [listCats, setListCats] = useState(props.currentRootCategories);
 
     useEffect(() => {
         props.getListCategories();
@@ -21,65 +27,73 @@ const ItemsContainer = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listCats]);
 
-    const {addToast} = useToasts();
+    const { addToast } = useToasts();
 
     const showToast = (message, status) => {
         addToast(message, {
             appearance: status,
             autoDismiss: true,
-        })
+        });
     };
 
     const addItemToBaseHandler = () => {
-        props.addCatToBase(props.addItemCurrentCat, props.addItemName, props.addItemPrice)
-            .then(res => {
+        props
+            .addCatToBase(
+                props.addItemCurrentCat,
+                props.addItemName,
+                props.addItemPrice
+            )
+            .then((res) => {
                 if (res) {
                     props.getAllItems();
-                    showToast('Category is added', 'success');
+                    showToast("Category is added", "success");
                 } else {
-                    showToast('Error', 'error');
+                    showToast("Error", "error");
                 }
             });
-        props.setAddItemPrice('');
-        props.setAddItemName('');
+        props.setAddItemPrice("");
+        props.setAddItemName("");
     };
 
     const deleteItemHandler = (id, category) => {
-        props.deleteItemFromBase(id, category)
-            .then(res => {
-                if (res) {
-                    props.getAllItems();
-                    showToast('Category is deleted', 'info');
-                } else {
-                    showToast('Error', 'error');
-                }
-            });
+        props.deleteItemFromBase(id, category).then((res) => {
+            if (res) {
+                props.getAllItems();
+                showToast("Category is deleted", "info");
+            } else {
+                showToast("Error", "error");
+            }
+        });
     };
 
     const editItemCatInBase = (id, category, name, price, oldCat) => {
-        props.editCatInBase(id, category, name, price, oldCat)
-            .then(res => {
-                if (res) {
-                    props.getAllItems();
-                    showToast('Category is replaced', 'info');
-                } else {
-                    showToast('Error', 'error');
-                }
-            })
+        props.editCatInBase(id, category, name, price, oldCat).then((res) => {
+            if (res) {
+                props.getAllItems();
+                showToast("Category is replaced", "info");
+            } else {
+                showToast("Error", "error");
+            }
+        });
     };
 
     const renameItemHandler = (id, category, name, price) => {
-        props.renameItemInBase(id, category, name, price)
-            .then(res => {
-                if (res) {
-                    props.getAllItems();
-                    showToast('Item data is renamed', 'info');
-                } else {
-                    showToast('Error', 'error');
-                }
-            })
-    }
+        props.renameItemInBase(id, category, name, price).then((res) => {
+            if (res) {
+                props.getAllItems();
+                showToast("Item data is renamed", "info");
+            } else {
+                showToast("Error", "error");
+            }
+        });
+    };
 
+    const sortButtonsHandler = (e) => {
+        const val = e.target.value;
+        const sortOrder = props.currentSortOrder;
+        props.setAllItems(SortingItems.sort(props.allItems, val, sortOrder));
+        props.setCurrentSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    };
 
     const onNameChangeHandler = (e) => {
         props.setAddItemName(e.target.value);
@@ -92,28 +106,32 @@ const ItemsContainer = (props) => {
         props.setAddItemCurrentCat(e.target.value);
     };
 
-
     return (
         <>
-            <Items {...props} addItemToBaseHandler={addItemToBaseHandler} deleteItemHandler={deleteItemHandler}
-                   editItemCatInBase={editItemCatInBase}
-                   renameItemHandler={renameItemHandler}
-                   onNameChangeHandler={onNameChangeHandler}
-                   onPriceChangeHandler={onPriceChangeHandler}
-                   onCategorySelectHandler={onCategorySelectHandler}/>
+            <Items
+                {...props}
+                addItemToBaseHandler={addItemToBaseHandler}
+                deleteItemHandler={deleteItemHandler}
+                editItemCatInBase={editItemCatInBase}
+                renameItemHandler={renameItemHandler}
+                onNameChangeHandler={onNameChangeHandler}
+                onPriceChangeHandler={onPriceChangeHandler}
+                onCategorySelectHandler={onCategorySelectHandler}
+                sortButtonsHandler={sortButtonsHandler}
+            />
         </>
-    )
-}
-
+    );
+};
 
 const mapStateToProps = (state) => ({
     allCategories: state.items.allCategories,
     addItemCurrentCat: state.items.addItemCurrentCat,
     addItemName: state.items.addItemName,
     addItemPrice: state.items.addItemPrice,
-    allItems: state.items.allItems
-})
-
+    allItems: state.items.allItems,
+    tableHeadItems: state.items.tableHeadItems,
+    currentSortOrder: state.items.currentSortOrder,
+});
 
 export default connect(mapStateToProps, {
     getListCategories,
@@ -124,5 +142,6 @@ export default connect(mapStateToProps, {
     getAllItems,
     deleteItemFromBase,
     editCatInBase,
-    renameItemInBase
+    setAllItems,
+    setCurrentSortOrder,
 })(ItemsContainer);

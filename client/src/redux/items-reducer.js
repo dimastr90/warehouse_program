@@ -7,13 +7,16 @@ const SET_ADD_ITEM_CURRENT_CAT = 'SET_ADD_ITEM_CURRENT_CAT';
 const SET_ADD_ITEM_NAME = 'SET_ADD_ITEM_NAME';
 const SET_ADD_ITEM_PRICE = 'SET_ADD_ITEM_PRICE';
 const SET_ALL_ITEMS = 'SET_ALL_ITEMS';
+const SET_CURRENT_SORT_ORDER = 'SET_CURRENT_SORT_ORDER';
 
 const initialState = {
     allCategories: [],
     allItems: [],
     addItemCurrentCat: 'root',
     addItemName: '',
-    addItemPrice: ''
+    addItemPrice: '',
+    tableHeadItems:[{name:'Uniq_Id',value:"uniq_Id"}, {name:'Category', value:'category'}, {name:'Name',value:'name'},{name:'Price',value:'price'}],
+    currentSortOrder:'asc'
 };
 
 
@@ -43,7 +46,12 @@ const itemsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allItems: action.arrayWithItems
-            }
+            };
+        case SET_CURRENT_SORT_ORDER:
+            return {
+                ...state,
+                currentSortOrder: action.newOrder
+            };
         default:
             return state;
 
@@ -56,6 +64,7 @@ export const setAllItems = (arrayWithItems) => ({type: SET_ALL_ITEMS, arrayWithI
 export const setAddItemCurrentCat = (cat) => ({type: SET_ADD_ITEM_CURRENT_CAT, cat});
 export const setAddItemName = (name) => ({type: SET_ADD_ITEM_NAME, name});
 export const setAddItemPrice = (price) => ({type: SET_ADD_ITEM_PRICE, price});
+export const setCurrentSortOrder = (newOrder) => ({type:SET_CURRENT_SORT_ORDER, newOrder});
 
 
 export const getListCategories = () => async (dispatch) => {

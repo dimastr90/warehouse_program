@@ -11,10 +11,11 @@ import {
     setCurrentCatForAdd,
     setCurrentItemForAdd,
     setCurrentItemListForAdd,
-    setCurrentQtyForAdd,
+    setCurrentQtyForAdd, setCurrentSelectedBaseData, setCurrentSortOrder,
     setNewBaseInputName,
     setSelectedBase
 } from "../../redux/bases-reducer";
+import SortingItems from "../../modules/SortingItems";
 
 
 const BasesContainer = (props) => {
@@ -160,6 +161,13 @@ const BasesContainer = (props) => {
                 showToast('Error', 'error');
             }
         })
+    };
+
+    const sortButtonsHandler = (e) => {
+        const val = e.target.value;
+        const sortOrder = props.currentSortOrder;
+        props.setCurrentSelectedBaseData(SortingItems.sort(props.currentSelectedBaseData, val, sortOrder));
+        props.setCurrentSortOrder(sortOrder==='asc' ? 'desc' : 'asc');
     }
 
 
@@ -174,7 +182,8 @@ const BasesContainer = (props) => {
                    addItemButtonHandler={addItemButtonHandler}
                    removeBaseItemHandler={removeBaseItemHandler}
                    renameBaseItemHandler={renameBaseItemHandler}
-                   removeBaseHandler={removeBaseHandler}/>
+                   removeBaseHandler={removeBaseHandler}
+                   sortButtonsHandler={sortButtonsHandler}/>
         </div>
     )
 };
@@ -189,7 +198,9 @@ const mapStateToProps = (state) => ({
     currentItemForAdd: state.bases.currentItemForAdd,
     currentQtyForAdd: state.bases.currentQtyForAdd,
     currentItemListForAdd: state.bases.currentItemListForAdd,
-    currentSelectedBaseData: state.bases.currentSelectedBaseData
+    currentSelectedBaseData: state.bases.currentSelectedBaseData,
+    tableHeadItems: state.bases.tableHeadItems,
+    currentSortOrder: state.bases.currentSortOrder
 });
 
 export default connect(mapStateToProps, {
@@ -206,5 +217,7 @@ export default connect(mapStateToProps, {
     getBaseData,
     removeBase,
     removeItemFromBase,
-    renameItemInBase
+    renameItemInBase,
+    setCurrentSortOrder,
+    setCurrentSelectedBaseData
 })(BasesContainer);

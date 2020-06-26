@@ -76,7 +76,9 @@ router.post(
                     message: "Incorrect new base item data"
                 })
             }
-            const {base, id, category,name, price, qty} = req.body;
+            const {base, id, category,name} = req.body;
+            const price = Number(req.body.price);
+            const qty = Number(req.body.qty);
 
 
             const check = await Bases.find({$and: [{_id: base}, {items: {$elemMatch: {uniq_Id: id}}}]});
@@ -168,7 +170,9 @@ router.put(
                     message: "Incorrect input data"
                 })
             }
-            const {base, id, price, qty} = req.body;
+            const {base, id} = req.body;
+            const price = Number(req.body.price);
+            const qty = Number(req.body.qty);
 
             const check = await Bases.find({$and: [{_id: base}, {items: {$elemMatch: {uniq_Id: id}}}]});
 
