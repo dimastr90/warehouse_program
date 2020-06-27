@@ -17,6 +17,8 @@ const BaseNavbar = (props) => {
                         </button>
                     </div>
                 </div>
+
+
                 <div className={classes.basesNames}>
                     <h5>All bases list:</h5>
                     <ul className={classes.listBases}>
