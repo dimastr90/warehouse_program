@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Items from "./Items";
 import { connect } from "react-redux";
 import {
-    addCatToBase,
+    addItemToBase,
     deleteItemFromBase,
     editCatInBase,
     getAllItems,
@@ -27,6 +27,7 @@ const ItemsContainer = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listCats]);
 
+    //add useToast hook and function for using him
     const { addToast } = useToasts();
 
     const showToast = (message, status) => {
@@ -36,9 +37,10 @@ const ItemsContainer = (props) => {
         });
     };
 
+    //add new item to database, after pressing "Add item" button
     const addItemToBaseHandler = () => {
         props
-            .addCatToBase(
+            .addItemToBase(
                 props.addItemCurrentCat,
                 props.addItemName,
                 props.addItemPrice
@@ -55,6 +57,7 @@ const ItemsContainer = (props) => {
         props.setAddItemName("");
     };
 
+    //delete item from database
     const deleteItemHandler = (id, category) => {
         props.deleteItemFromBase(id, category).then((res) => {
             if (res) {
@@ -66,6 +69,7 @@ const ItemsContainer = (props) => {
         });
     };
 
+    //change item current category
     const editItemCatInBase = (id, category, name, price, oldCat) => {
         props.editCatInBase(id, category, name, price, oldCat).then((res) => {
             if (res) {
@@ -77,6 +81,7 @@ const ItemsContainer = (props) => {
         });
     };
 
+    //change item price and name
     const renameItemHandler = (id, category, name, price) => {
         props.renameItemInBase(id, category, name, price).then((res) => {
             if (res) {
@@ -88,6 +93,7 @@ const ItemsContainer = (props) => {
         });
     };
 
+    //change order of sorting table
     const sortButtonsHandler = (e) => {
         const val = e.target.value;
         const sortOrder = props.currentSortOrder;
@@ -95,13 +101,17 @@ const ItemsContainer = (props) => {
         props.setCurrentSortOrder(sortOrder === "asc" ? "desc" : "asc");
     };
 
+    //Change "add item form" input name
     const onNameChangeHandler = (e) => {
         props.setAddItemName(e.target.value);
     };
 
+    //Change "add item form" input price
     const onPriceChangeHandler = (e) => {
         props.setAddItemPrice(e.target.value);
     };
+
+    //Change "add item form" input category
     const onCategorySelectHandler = (e) => {
         props.setAddItemCurrentCat(e.target.value);
     };
@@ -138,10 +148,11 @@ export default connect(mapStateToProps, {
     setAddItemCurrentCat,
     setAddItemName,
     setAddItemPrice,
-    addCatToBase,
+    addItemToBase,
     getAllItems,
     deleteItemFromBase,
     editCatInBase,
     setAllItems,
     setCurrentSortOrder,
+    renameItemInBase
 })(ItemsContainer);
